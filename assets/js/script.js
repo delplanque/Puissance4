@@ -4,6 +4,7 @@ var gameStatus = [];
 var currentPlayer = 0; // 1
 var checkWinIndice = 0;
 var isVictory = false;
+var isIaPlayer = false;
 
 function createGrid() {
   var grid = "";
@@ -40,9 +41,26 @@ function initGame(time) {
 }
 
 function play(event) {
-  var parrentID = event.target.parentNode.id;
-  var id = parrentID.split("-")[1];
+  
+  if(!isIaPlayer){
+    var parrentID = event.target.parentNode.id;
+    var id = parrentID.split("-")[1];
+    playGame(id);
+  } else {
+    if(currentPlayer == 0 ) {
+      var parrentID = event.target.parentNode.id;
+      var id = parrentID.split("-")[1];
+      playGame(id);
+    }
+    turnIa();
+  }
+}
 
+function turnIa () {
+
+}
+
+function playGame (id) {
   if (gameStatus[id].length < 6) {
     gameStatus[id].push(currentPlayer);
     displayResult(event, gameStatus[id]);
@@ -107,8 +125,17 @@ function win(player) {
   isVictory = true;
 }
 
+// INIT GAME
+initGame(0);
+
 replay.addEventListener('click', event => {
   initGame(0);
 });
 
-initGame(0);
+ia.addEventListener('click', event => {
+  initGame(0);
+});
+
+multi.addEventListener('click', event => {
+  initGame(0);
+});

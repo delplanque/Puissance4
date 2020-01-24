@@ -70,7 +70,7 @@ function checkWin([x, y], player) {
   let count = 0;
   for (let j = 0; j < 6; j++) {
     count = this.gameStatus[x][j] == player ? count + 1 : 0;
-    if (count >= 4) {
+    if (count >= 4 && !isVictory) {
       win(player);
     }
   }
@@ -78,7 +78,7 @@ function checkWin([x, y], player) {
   count = 0;
   for (let i = 0; i < 7; i++) {
     count = this.gameStatus[i][y] == player ? count + 1 : 0;
-    if (count >= 4) {
+    if (count >= 4 && !isVictory) {
       win(player);
     }
   }
@@ -87,7 +87,7 @@ function checkWin([x, y], player) {
   let shift = x - y;
   for (let i = Math.max(shift, 0); i <= Math.min(6, 7 + shift); i++) {
     count = this.gameStatus[i][i - shift] == player ? count + 1 : 0;
-    if (count >= 4) {
+    if (count >= 4 && !isVictory) {
       win(player);
     }
   }
@@ -96,7 +96,7 @@ function checkWin([x, y], player) {
   shift = x + y;
   for (let i = Math.max(shift - 7 + 1, 0); i < Math.min(6, shift + 1); i++) {
     count = this.gameStatus[i][shift - i] == player ? count + 1 : 0;
-    if (count >= 4) {
+    if (count >= 4 && !isVictory) {
       win(player);
     }
   }

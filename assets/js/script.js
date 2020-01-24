@@ -58,24 +58,36 @@ function play(event) {
 
 function turnIa () {
   var win = false;
+  var hasPlay = false;
   for (let id = 0; id < 7 && win == false; id++) {
     gameStatus[id].push(1);
     win = checkWinIA(getCoordonate(gameStatus, id), 1);
     if (!win) {
       gameStatus[id].pop();
     } else {
+      hasPlay = true;
       displayResultIA(id, gameStatus[id]);
-      checkWin(getCoordonate(gameStatus, id), 1);
+      if (checkWin(getCoordonate(gameStatus, id), 1) == true)
+        winAlert(1);
     }
   }
-  if (!win){
+  if (!hasPlay){
     for (let id = 0; id < 7 && win == false; id++) {
       gameStatus[id].push(0);
       win = checkWinIA(getCoordonate(gameStatus, id), 0);
       gameStatus[id].pop();
       if (win == true) {
-        console.log(win);
-        console.log(getCoordonate(gameStatus, id))
+        hasPlay = true;
+        gameStatus[id].push(1);
+        displayResultIA(id, gameStatus[id]);
+      }
+    }
+  }
+  if (!hasPlay) {
+    while (!hasPlay) {
+      var id = Math.floor(Math.random() * Math.floor(7));
+      if (gameStatus[id].length < 7) {
+        hasPlay = true;
         gameStatus[id].push(1);
         displayResultIA(id, gameStatus[id]);
       }
@@ -88,7 +100,8 @@ function playGame (id) {
   if (gameStatus[id].length < 6) {
     gameStatus[id].push(currentPlayer);
     displayResult(event, gameStatus[id]);
-    checkWin(getCoordonate(gameStatus, id), currentPlayer);
+    if (checkWin(getCoordonate(gameStatus, id), currentPlayer) == true)
+      winAlert(currentPlayer);
     changePlayer();
   }
 }
@@ -118,7 +131,7 @@ function checkWin([x, y], player) {
   for (let j = 0; j < 6; j++) {
     count = this.gameStatus[x][j] == player ? count + 1 : 0;
     if (count >= 4 && !isVictory) {
-      win(player);
+      return true;
     }
   }
   // Vertical
@@ -126,7 +139,7 @@ function checkWin([x, y], player) {
   for (let i = 0; i < 7; i++) {
     count = this.gameStatus[i][y] == player ? count + 1 : 0;
     if (count >= 4 && !isVictory) {
-      win(player);
+      return true;
     }
   }
   // Diagonal
@@ -135,7 +148,7 @@ function checkWin([x, y], player) {
   for (let i = Math.max(shift, 0); i <= Math.min(6, 7 + shift); i++) {
     count = this.gameStatus[i][i - shift] == player ? count + 1 : 0;
     if (count >= 4 && !isVictory) {
-      win(player);
+      return true;
     }
   }
   // Anti-diagonal
@@ -144,7 +157,7 @@ function checkWin([x, y], player) {
   for (let i = Math.max(shift - 7 + 1, 0); i < Math.min(6, shift + 1); i++) {
     count = this.gameStatus[i][shift - i] == player ? count + 1 : 0;
     if (count >= 4 && !isVictory) {
-      win(player);
+      return true;
     }
   }
 }
@@ -188,8 +201,15 @@ function checkWinIA([x, y], player) {
   return false;
 }
 
-function win(player) {
-  alert('Le joueur ' + player + ' gagne');
+function winAlert(player) {
+  if (!isIaPlayer)
+    alert('Le joueur ' + player + ' gagne');
+  else {
+    if (player == 0)
+      alert('Vous avez gagné');
+    else
+      alert("L'IA a gagné, LOOSER");
+  }
   isVictory = true;
 }
 

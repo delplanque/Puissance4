@@ -1,4 +1,5 @@
 var gameContainer = document.getElementById("game");
+var replay = document.getElementById('replay');
 var gameStatus = [];
 var currentPlayer = 0; // 1
 var checkWinIndice = 0;
@@ -105,5 +106,9 @@ function win(player) {
   alert('Le joueur ' + player + ' gagne');
   isVictory = true;
 }
+
+replay.addEventListener('click', event => {
+  initGame(0);
+});
 
 initGame(0);

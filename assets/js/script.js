@@ -68,7 +68,7 @@ function turnIa () {
       hasPlay = true;
       displayResultIA(id, gameStatus[id]);
       if (checkWin(getCoordonate(gameStatus, id), 1) == true)
-        winAlert(1);
+        winAlert(2);
     }
   }
   if (!hasPlay){
@@ -101,7 +101,7 @@ function playGame (id) {
     gameStatus[id].push(currentPlayer);
     displayResult(event, gameStatus[id]);
     if (checkWin(getCoordonate(gameStatus, id), currentPlayer) == true)
-      winAlert(currentPlayer);
+      winAlert(currentPlayer + 1);
     changePlayer();
   }
 }
@@ -119,6 +119,9 @@ function displayResultIA(id, currentColum) {
 
 function changePlayer() {
   currentPlayer = currentPlayer === 0 ? 1 : 0;
+  var player = document.getElementById('player');
+  console.log(player)
+  player.innerText = `Joueur ${currentPlayer + 1}, c'est votre tour`;
 }
 
 function getCoordonate(game, x) {
@@ -205,7 +208,7 @@ function winAlert(player) {
   if (!isIaPlayer)
     alert('Le joueur ' + player + ' gagne');
   else {
-    if (player == 0)
+    if (player == 1)
       alert('Vous avez gagné');
     else
       alert("L'IA a gagné, LOOSER");

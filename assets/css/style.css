@@ -26,3 +26,7 @@
 .player2 {
   background-color: #ff5252;
 }
+
+.help {
+  display: flex;
+}

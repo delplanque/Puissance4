@@ -1,0 +1,32 @@
+#game {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.rowPlay {
+  display: flex;
+  flex-direction: column;
+  background-color: #536dfe;
+}
+
+.case {
+  margin: 10px;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #fff;
+}
+
+.player1 {
+  background-color: #ffc107;
+}
+
+.player2 {
+  background-color: #ff5252;
+}
+
+.help {
+  display: flex;
+}
